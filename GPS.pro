@@ -8,14 +8,16 @@ OBJECTS_DIR = tmp/obj
 MOC_DIR = tmp/moc
 RCC_DIR = tmp/rcc
 
-QT += webkit
+QT += webkit network
 
 SOURCES += \
 	Main.cpp \
 	MainWindow.cpp \
+	GpsClient.cpp \
 
 HEADERS += \
 	MainWindow.h \
+	GpsClient.h \
 
 FORMS += MainWindow.ui \
 
