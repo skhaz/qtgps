@@ -20,18 +20,18 @@
 
 class MainWindow : public QWidget, private Ui_MainWindow
 {
-	public:
-		MainWindow(QWidget *parent = 0);
+    public:
+        MainWindow(QWidget *parent = 0);
 
-		~MainWindow();
+        ~MainWindow();
 
-	protected slots:
-		void update(double latitude, double longitude);
+    protected slots:
+        void update(double latitude, double longitude);
 
-	private:
-		Q_OBJECT
+    private:
+        Q_OBJECT
 
-		GpsClient *gps;
+        GpsClient *gps;
         QList<QPair<double, double> > coordinates;
 };
 

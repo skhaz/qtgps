@@ -6,23 +6,23 @@
 MainWindow::MainWindow(QWidget *parent)
 : QWidget(parent)
 {
-	setupUi(this);
+    setupUi(this);
 
     gps = new GpsClient(this);
 
-	connect(gps, SIGNAL(position(double, double)), SLOT(update(double, double)));
-	connect(view, SIGNAL(loadProgress(int)), progressBar, SLOT(setValue(int)));
-	connect(view, SIGNAL(loadStarted()), progressBar, SLOT(show()));
-	connect(view, SIGNAL(loadFinished(bool)), progressBar, SLOT(hide()));
-	connect(view, SIGNAL(loadFinished(bool)), gps, SLOT(start()));
+    connect(gps, SIGNAL(position(double, double)), SLOT(update(double, double)));
+    connect(view, SIGNAL(loadProgress(int)), progressBar, SLOT(setValue(int)));
+    connect(view, SIGNAL(loadStarted()), progressBar, SLOT(show()));
+    connect(view, SIGNAL(loadFinished(bool)), progressBar, SLOT(hide()));
+    connect(view, SIGNAL(loadFinished(bool)), gps, SLOT(start()));
 
-	QFile file("index.html");
+    QFile file("index.html");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-		QString html = QTextStream(&file).readAll();
-		view->setHtml(html);
-	}
+        QString html = QTextStream(&file).readAll();
+        view->setHtml(html);
+    }
 }
 
 MainWindow::~MainWindow()

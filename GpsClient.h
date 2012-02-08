@@ -13,19 +13,19 @@
 
 class GpsClient : public QThread
 {
-	public:
-		GpsClient(QObject *parent = 0);
+    public:
+        GpsClient(QObject *parent = 0);
 
-		void run();
+        void run();
 
-	signals:
-		void position(double, double);
+    signals:
+        void position(double, double);
 
-	protected:
-		void parse(QString const& rmc);
+    protected:
+        void parse(QString const& rmc);
 
-	private:
-		Q_OBJECT
+    private:
+        Q_OBJECT
 };
 
 #endif
