@@ -11,7 +11,7 @@ GpsClient::GpsClient(QObject *parent)
 
 void GpsClient::run()
 {
-	const int timeout = 1000;
+    const int timeout = 5000;
 
 	QTcpSocket socket;
 
@@ -23,17 +23,17 @@ void GpsClient::run()
 		return;
 	}
 
-	socket.write("?WATCH={\"enable\":true,\"json\":false, \"nmea\":true}");
+    // socket.write("?WATCH={\"enable\":true,\"json\":false, \"nmea\":true}");
+    socket.write("?WATCH={\"nmea\":true}");
+
 
 	forever
 	{
 		socket.waitForReadyRead();
-
 		QString data = socket.readAll();
+        QStringList result = data.split('$');
 
-		QStringList result = data.split('$');
-
-		for (int i = 0; i <result.length(); ++i)
+        for (int i = 0; i < result.length(); ++i)
 		{
 			QString subset = result[i].left(5);
 
@@ -60,7 +60,6 @@ void GpsClient::parse(QString const& rmc)
 			qDebug() << "invalid data!";
 			return;
 		}
-
 
 		if (array[3].length() >= 3)
 		{

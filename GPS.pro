@@ -2,7 +2,7 @@
 TEMPLATE = app
 TARGET = gps
 DESTDIR = output
-CONFIG += console
+CONFIG -= console
 
 OBJECTS_DIR = tmp/obj
 MOC_DIR = tmp/moc

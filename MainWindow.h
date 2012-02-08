@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QWebFrame>
+#include <QList>
+#include <QPair>
 
 #include "GpsClient.h"
 
@@ -30,6 +32,7 @@ class MainWindow : public QWidget, private Ui_MainWindow
 		Q_OBJECT
 
 		GpsClient *gps;
+        QList<QPair<double, double> > coordinates;
 };
 
 #endif
