@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
 
+    update(10,10);
+
     gps = new GpsClient(this);
 
     connect(gps, SIGNAL(position(double, double)), SLOT(update(double, double)));
@@ -31,36 +33,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::update(double latitude, double longitude)
 {
-    QPair<double, double> temp = qMakePair(latitude, longitude);
+    QStringList code;
 
-    if (coordinates.isEmpty()) {
-        coordinates << temp;
-    } else {
-        if (coordinates.last() != temp) {
-            coordinates << temp;
-            qDebug() << coordinates.last() << temp;
-        }
-
-        else {
-            return;
-        }
-    }
-
-    QStringList array, code;
-
-    for (int i = 0; i < coordinates.size(); ++i) {
-        QPair<double, double> coordinate = coordinates[i];
-        array << QString("new GLatLng(%1, %2)").arg(latitude).arg(longitude);
-    }
-
-    code << "map.clearOverlays()";
-    code << QString("var pos = new GLatLng(%1, %2);").arg(latitude).arg(longitude);
-    code << "map.setCenter(pos, 19);";
-    code << "var marker = new GMarker(pos);";
-    code << "map.addOverlay(marker);";
-
-    code << QString("var polyline = new GPolyline([%1],\"#0000dd\", 6, 0.4);").arg(array.join(","));
-    code << "map.addOverlay(polyline);";
+    code << "if (circle !== null) circle.setMap(null);";
+    code << "var circleOptions = {";
+    code << "strokeColor: \"#FF0000\",";
+    code << "strokeOpacity: 0.8,";
+    code << "strokeWeight: 2,";
+    code << "fillColor: \"#FF0000\",";
+    code << "fillOpacity: 0.35,";
+    code << "map: map,";
+    code << QString("center: new google.maps.LatLng(%1, %2),").arg(latitude).arg(longitude);
+    code << "radius: 20";
+    code << "};";
+    code << "circle = new google.maps.Circle(circleOptions);";
+    qDebug() << code.join("\n");
 
 	view->page()->mainFrame()->evaluateJavaScript(code.join("\n"));
 }
